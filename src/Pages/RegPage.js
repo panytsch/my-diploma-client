@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
 
 class RegPage extends React.Component {
   render() {
@@ -10,9 +9,9 @@ class RegPage extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {};
+const mapDispatchToProps = dispatch => ({});
 
-const mapStateToProps = state => {};
+const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   withRouter(RegPage)

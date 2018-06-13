@@ -4,12 +4,16 @@ import thunk from "redux-thunk";
 
 function userData(
   state = {
-    data: []
+    data: {},
+    user:
+      (window.localStorage.trelloUser &&
+        JSON.parse(window.localStorage.trelloUser)) ||
+      null
   },
   action
 ) {
   switch (action.type) {
-    case "FETCH_DATA_SUCCESS":
+    case "FETCH_USER":
       state.data = state.data.concat(action.payload);
       return { ...state };
     case "CLEAR_DATA":

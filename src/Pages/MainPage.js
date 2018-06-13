@@ -10,7 +10,7 @@ class MainPage extends React.Component {
     return (
       <div>
         <Header />
-        here
+        <div className="">here will be content</div>
       </div>
     );
   }
@@ -18,7 +18,9 @@ class MainPage extends React.Component {
 
 const mapDispatchToProps = dispatch => ({});
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  data: state.userData
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   withRouter(MainPage)

@@ -6,6 +6,7 @@ const Diva = styled("div")`
   display: inline-block;
   ${"button"} {
     padding: 3px 10px;
+    border: none;
     border-radius: 5px;
     background-color: ${props => props.color || "rgba(181, 219, 151, 0.66)"};
     font-size: ${props => props.fontSize || "1em"};

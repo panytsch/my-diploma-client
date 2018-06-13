@@ -21,7 +21,7 @@ const container = css({
 });
 
 const place = css({
-  font: "700 20px Arial, sans-serif"
+  font: "700 20px Ubuntu, sans-serif"
 });
 
 class HeaderMainPage extends React.Component {

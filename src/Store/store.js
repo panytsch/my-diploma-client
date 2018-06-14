@@ -13,6 +13,9 @@ function userData(
   action
 ) {
   switch (action.type) {
+    case "FETCH_DATA_SUCCESS":
+      state.data[state.user.nickname] = action.data;
+      return { ...state };
     case "FETCH_USER":
       state.data = state.data.concat(action.payload);
       return { ...state };

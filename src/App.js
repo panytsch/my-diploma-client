@@ -6,6 +6,7 @@ import MainPage from "./Pages/MainPage";
 import AuthPage from "./Pages/AuthPage";
 import RegPage from "./Pages/RegPage";
 import DashBoard from "./Pages/DashBoard";
+import StickBoard from "./Pages/StickBoard";
 import store from "./Store/store";
 import "./styles/reset.css";
 import "./styles/main.css";
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/" component={MainPage} />
             <Route path="/authorize" component={AuthPage} />
             <Route path="/registration" component={RegPage} />
+            <Route path="/board/:board" component={StickBoard} />
             <Route path="/dashboard/:nickname" component={DashBoard} />
           </div>
         </Router>

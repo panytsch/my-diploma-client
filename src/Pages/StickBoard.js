@@ -1,19 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 import config from "../Configs/mainConfig";
 
-class DashBoard extends React.Component {
+class StickBoard extends React.Component {
   componentWillMount() {
-    if (this.props.data.data[[this.props.match.params.nickname]]) {
-      console.log(1);
-    } else {
+    if (!this.props.data.user) {
+      this.props.history.push("/");
+    } else if (
+      !this.props.data.data ||
+      !this.props.data.data[this.props.data.user.nickname]
+    ) {
       axios
         .get(`${config.host}boards`, {
           params: {
-            nickname: this.props.match.params.nickname,
+            nickname: this.props.data.user.nickname,
             token: this.props.data.user.token
           }
         })
@@ -27,20 +30,15 @@ class DashBoard extends React.Component {
     }
   }
   render() {
-    //It's REDIREEEEECT!!!
-    // this.props.history.push("/");
-    let { data } = this.props.data || {};
-    let { nickname } = this.props.match.params;
-    return (
-      <div>
-        {data[nickname] &&
-          Object.keys(data[nickname]).map(i => (
-            <Link to={`/board/${i}`} key={i}>
-              <div className="">{data[nickname][i].title}</div>
-            </Link>
-          ))}
-      </div>
-    );
+    const id = this.props.match.params.board;
+    const { nickname } = this.props.data.user || null;
+    const obj =
+      (nickname &&
+        this.props.data.data &&
+        this.props.data.data[nickname] &&
+        this.props.data.data[nickname][id]) ||
+      null;
+    return <div>{obj && obj.title}</div>;
   }
 }
 
@@ -57,5 +55,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(DashBoard)
+  withRouter(StickBoard)
 );

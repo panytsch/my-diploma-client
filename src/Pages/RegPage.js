@@ -2,17 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-class RegPage extends React.Component {
-  render() {
-    console.log(1);
-    return <div>RegPage</div>;
-  }
+import FormAuth from "../Components/Big/FormAuth";
+
+class AuthPage extends React.Component {
+	componentWillMount() {
+		if (this.props.data.user && this.props.data.user.token) {
+			this.props.history.push(`/dashboard/${this.props.data.user.nickname}`);
+		}
+	}
+	render() {
+		//It's REDIREEEEECT!!!
+		// this.props.history.push("/");
+		return (
+			<div>
+				<FormAuth auth={false} />
+			</div>
+		);
+	}
 }
 
 const mapDispatchToProps = dispatch => ({});
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+	data: state.userData
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(RegPage)
+	withRouter(AuthPage)
 );

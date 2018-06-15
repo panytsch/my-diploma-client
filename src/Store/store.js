@@ -21,6 +21,7 @@ function userData(
       return { ...state };
     case "SET_USER":
       state.user = action.user;
+      window.localStorage.trelloUser = JSON.stringify(action.user);
       return { ...state };
     default:
       return state;

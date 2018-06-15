@@ -4,10 +4,11 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 
 import config from "../Configs/mainConfig";
+import Header from "../Components/Big/HeaderMainPage";
 
 class StickBoard extends React.Component {
   componentWillMount() {
-    if (!this.props.data.user) {
+    if (!this.props.data || !this.props.data.user) {
       this.props.history.push("/");
     } else if (
       !this.props.data.data ||
@@ -38,7 +39,13 @@ class StickBoard extends React.Component {
         this.props.data.data[nickname] &&
         this.props.data.data[nickname][id]) ||
       null;
-    return <div>{obj && obj.title}</div>;
+    console.log(obj);
+    return (
+      <div>
+        <Header autorize={false} registration={false} logout={true} />
+        {obj && obj.title}
+      </div>
+    );
   }
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { css } from "react-emotion";
 import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
 
 import config from "../../Configs/mainConfig";
 import ButtonTR from "../Small/Button/ButtonTR";
@@ -18,7 +19,11 @@ const container = css({
   display: "flex",
   justifyContent: "space-between",
   padding: "20px",
-  backgroundColor: "rgb(166, 198, 241)"
+  backgroundColor: "rgb(166, 198, 241)",
+  "& a": {
+    textTransform: "none",
+    textDecoration: "none"
+  }
 });
 
 const place = css({
@@ -29,7 +34,9 @@ class HeaderMainPage extends React.Component {
   render() {
     return (
       <div className={container}>
-        <div className={place}>Trello by Panytsch</div>
+        <Link to="/">
+          <div className={place}>Trello by Panytsch</div>
+        </Link>
         <div>
           <nav className={navClass}>
             {this.props.autorize && (
@@ -57,6 +64,20 @@ class HeaderMainPage extends React.Component {
                 />
               </li>
             )}
+            {this.props.logout && (
+              <li>
+                <ButtonTR
+                  onClick={() => {
+                    this.props.history.push(
+                      `/dashboard/${this.props.data.user.nickname}`
+                    );
+                  }}
+                  text="My DashBoard"
+                  color="rgba(#b2b681, 0.81)"
+                  hover="rgb(77, 182, 93)"
+                />
+              </li>
+            )}
           </nav>
         </div>
       </div>
@@ -75,4 +96,6 @@ const mapStateToProps = state => ({
   data: state.userData
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderMainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(HeaderMainPage)
+);

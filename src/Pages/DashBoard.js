@@ -8,11 +8,15 @@ import Header from "../Components/Big/HeaderMainPage";
 
 class DashBoard extends React.Component {
   componentWillMount() {
+    if (!this.props.data || !this.props.data.user) {
+      this.props.history.push("/");
+    }
     const { nickname } = this.props.match.params;
     const { data } = this.props.data;
     if (data[[nickname]]) {
-      console.log(1);
+      return;
     } else {
+      console.log("DashBoard page FETCH");
       axios
         .get(`${config.host}boards`, {
           params: {

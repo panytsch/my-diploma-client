@@ -20,7 +20,7 @@ class ButtonTR extends React.Component {
   render() {
     return (
       <Diva {...this.props}>
-        <Link to={this.props.link}>
+        <Link to={this.props.link || "/"}>
           <button>{this.props.text}</button>
         </Link>
       </Diva>

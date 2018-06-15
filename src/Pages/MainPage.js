@@ -5,11 +5,19 @@ import { withRouter } from "react-router-dom";
 import Header from "../Components/Big/HeaderMainPage";
 
 class MainPage extends React.Component {
+  componentWillMount() {
+    if (
+      this.props.data.user &&
+      this.props.data.user.nickname &&
+      this.props.data.user.token
+    ) {
+      this.props.history.push(`/dashboard/${this.props.data.user.nickname}`);
+    }
+  }
   render() {
-    console.log(1);
     return (
       <div>
-        <Header />
+        <Header autorize={true} registration={true} logout={false} />
         <div className="">here will be content</div>
       </div>
     );

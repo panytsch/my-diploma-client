@@ -15,7 +15,7 @@ class AuthPage extends React.Component {
     // this.props.history.push("/");
     return (
       <div>
-        <FormAuth />
+        <FormAuth auth={true} />
       </div>
     );
   }

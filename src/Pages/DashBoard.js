@@ -1,41 +1,65 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
 import config from "../Configs/mainConfig";
+import Header from "../Components/Big/HeaderMainPage";
 
-class AuthPage extends React.Component {
+class DashBoard extends React.Component {
   componentWillMount() {
-    if (this.props.data.data[[this.props.match.params.nickname]]) {
+    const { nickname } = this.props.match.params;
+    const { data } = this.props.data;
+    if (data[[nickname]]) {
       console.log(1);
     } else {
       axios
         .get(`${config.host}boards`, {
           params: {
-            nickname: this.props.match.params.nickname,
+            nickname: nickname,
             token: this.props.data.user.token
           }
         })
-        .then(response => {
-          console.log(response);
+        .then(({ data }) => {
+          let obj = {};
+          data.map(i => {
+            obj[i.id] = i;
+          });
+          this.props.fetchData(obj);
         });
     }
   }
   render() {
-    console.log(this.props.match.params.nickname);
-    //It's REDIREEEEECT!!!
-    // this.props.history.push("/");
-    return <div>dashboard</div>;
+    let { data } = this.props.data || {};
+    let { nickname } = this.props.match.params;
+    return (
+      <div>
+        <div>
+          <Header autorize={false} registration={false} logout={true} />
+        </div>
+        {data[nickname] &&
+          Object.keys(data[nickname]).map(i => (
+            <Link to={`/board/${i}`} key={i}>
+              <div className="">{data[nickname][i].title}</div>
+            </Link>
+          ))}
+      </div>
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  fetchData: data =>
+    dispatch({
+      type: "FETCH_DATA_SUCCESS",
+      data: data
+    })
+});
 
 const mapStateToProps = state => ({
   data: state.userData
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(AuthPage)
+  withRouter(DashBoard)
 );

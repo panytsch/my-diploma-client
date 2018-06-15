@@ -13,11 +13,14 @@ function userData(
   action
 ) {
   switch (action.type) {
-    case "FETCH_USER":
-      state.data = state.data.concat(action.payload);
+    case "FETCH_DATA_SUCCESS":
+      state.data[state.user.nickname] = action.data;
       return { ...state };
-    case "CLEAR_DATA":
-      state.data = [];
+    case "USER_CLEAR":
+      state.user = {};
+      return { ...state };
+    case "SET_USER":
+      state.user = action.user;
       return { ...state };
     default:
       return state;

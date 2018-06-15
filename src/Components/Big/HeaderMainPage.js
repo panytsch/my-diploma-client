@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "react-emotion";
+import { connect } from "react-redux";
 
 import config from "../../Configs/mainConfig";
 import ButtonTR from "../Small/Button/ButtonTR";
@@ -26,23 +27,36 @@ const place = css({
 
 class HeaderMainPage extends React.Component {
   render() {
-    console.log(config);
     return (
       <div className={container}>
         <div className={place}>Trello by Panytsch</div>
         <div>
           <nav className={navClass}>
-            <li>
-              <ButtonTR link="/authorize" text="Autorize" />
-            </li>
-            <li>
-              <ButtonTR
-                link="/registration"
-                text="Registration"
-                color="rgb(142, 157, 218)"
-                hover="rgb(103, 68, 126)"
-              />
-            </li>
+            {this.props.autorize && (
+              <li>
+                <ButtonTR link="/authorize" text="Autorize" />
+              </li>
+            )}
+            {this.props.registration && (
+              <li>
+                <ButtonTR
+                  link="/registration"
+                  text="Registration"
+                  color="rgb(142, 157, 218)"
+                  hover="rgb(103, 68, 126)"
+                />
+              </li>
+            )}
+            {this.props.logout && (
+              <li>
+                <ButtonTR
+                  onClick={this.props.clearUser}
+                  text="Logout"
+                  color="rgb(142, 157, 218)"
+                  hover="rgb(103, 68, 126)"
+                />
+              </li>
+            )}
           </nav>
         </div>
       </div>
@@ -50,4 +64,15 @@ class HeaderMainPage extends React.Component {
   }
 }
 
-export default HeaderMainPage;
+const mapDispatchToProps = dispatch => ({
+  clearUser: () =>
+    dispatch({
+      type: "USER_CLEAR"
+    })
+});
+
+const mapStateToProps = state => ({
+  data: state.userData
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderMainPage);

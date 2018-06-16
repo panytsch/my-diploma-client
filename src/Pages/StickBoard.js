@@ -3,40 +3,19 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import Board from "react-trello";
+import styled from "react-emotion";
 
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
 
-const bardData = {
-	lanes: [
-		{
-			id: "lane1",
-			title: "Planned Tasks",
-			label: "2/2",
-			cards: [
-				{
-					id: "Card1",
-					title: "Write Blog",
-					description: "Can AI make memes",
-					label: "30 mins"
-				},
-				{
-					id: "Card2",
-					title: "Pay Rent",
-					description: "Transfer via NEFT",
-					label: "5 mins",
-					metadata: { sha: "be312a1" }
-				}
-			]
-		},
-		{
-			id: "lane2",
-			title: "Completed",
-			label: "0/0",
-			cards: []
-		}
-	]
-};
+const Contain = styled("div")`
+	display: flex;
+	${".aside"} {
+		background-color: rgb(196, 45, 141);
+		flex-grow: 1;
+		flex-shrink: 0;
+	}
+`;
 
 class StickBoard extends React.Component {
 	componentWillMount() {
@@ -75,7 +54,28 @@ class StickBoard extends React.Component {
 		return (
 			<div>
 				<Header autorize={false} registration={false} logout={true} />
-				<Board data={bardData} draggable editable />
+				<Contain>
+					<Board
+						data={{
+							lanes: (obj && obj.stick) || [
+								{
+									id: "kaka",
+									title: "loading...",
+									cards: []
+								}
+							]
+						}}
+						style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
+						draggable
+						editable
+					/>
+					<div className="aside">
+						sdkfasghhjag <br />
+						dsaklgjkahg <br />{" "}
+						as.kahfasfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+						sssssssssss
+					</div>
+				</Contain>
 			</div>
 		);
 	}

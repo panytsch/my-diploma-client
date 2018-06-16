@@ -16,8 +16,11 @@ function userData(
 		case "FETCH_DATA_SUCCESS":
 			let obj = Object.assign({}, action.data);
 			Object.values(obj).map(i => {
-				i.cards = i.stick;
-				delete i.stick;
+				i.stick.length &&
+					i.stick.map(j => {
+						j.cards = j.item;
+						delete j.item;
+					});
 			});
 			state.data[state.user.nickname] = obj;
 			return { ...state };

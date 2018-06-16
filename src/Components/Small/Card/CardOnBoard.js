@@ -20,7 +20,7 @@ class Card extends React.Component {
 			return;
 		}
 		const { title } = this.props.data;
-		const count = this.props.data.cards.length;
+		const count = this.props.data.stick.length;
 		return (
 			<div className={cardStyle}>
 				<h3>Card name:</h3>

@@ -7,6 +7,15 @@ import styled from "react-emotion";
 
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
+import ButtonTR from "../Components/Small/Button/ButtonTR";
+
+const defaultData = [
+	{
+		id: "kaka",
+		title: "loading...",
+		cards: []
+	}
+];
 
 const Contain = styled("div")`
 	display: flex;
@@ -18,6 +27,12 @@ const Contain = styled("div")`
 `;
 
 class StickBoard extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			addCardVisible: true
+		};
+	}
 	componentWillMount() {
 		if (!this.props.data || !this.props.data.user) {
 			this.props.history.push("/");
@@ -41,10 +56,17 @@ class StickBoard extends React.Component {
 				});
 		}
 	}
+	setVisibleCancel() {
+		this.setState(
+			Object.assign(this.state, {
+				addCardVisible: !this.state.addCardVisible
+			})
+		);
+	}
 	render() {
 		const id = this.props.match.params.board;
 		const { nickname } = this.props.data.user || null;
-		const obj =
+		let obj =
 			(nickname &&
 				this.props.data.data &&
 				this.props.data.data[nickname] &&
@@ -57,23 +79,29 @@ class StickBoard extends React.Component {
 				<Contain>
 					<Board
 						data={{
-							lanes: (obj && obj.stick) || [
-								{
-									id: "kaka",
-									title: "loading...",
-									cards: []
-								}
-							]
+							lanes: (obj && [...obj.stick]) || defaultData
 						}}
 						style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
 						draggable
 						editable
 					/>
 					<div className="aside">
-						sdkfasghhjag <br />
-						dsaklgjkahg <br />{" "}
-						as.kahfasfssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-						sssssssssss
+						{!this.state.addCardVisible && (
+							<input type="text" ref={e => (this.addCardInput = e)} />
+						)}
+						<ButtonTR
+							onClick={() => {
+								!this.state.addCardVisible &&
+									this.props.addCard(
+										id,
+										(this.addCardInput && this.addCardInput.value) || "default"
+									);
+								this.setVisibleCancel();
+							}}
+							text={this.state.addCardVisible ? "Add Card" : "Add"}
+							color="#03aa37"
+							hover="#067328"
+						/>
 					</div>
 				</Contain>
 			</div>
@@ -86,6 +114,12 @@ const mapDispatchToProps = dispatch => ({
 		dispatch({
 			type: "FETCH_DATA_SUCCESS",
 			data: data
+		}),
+	addCard: (key, title) =>
+		dispatch({
+			type: "ADD_CARD",
+			key: key,
+			title: title
 		})
 });
 

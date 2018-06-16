@@ -31,6 +31,13 @@ function userData(
 			state.user = action.user;
 			window.localStorage.trelloUser = JSON.stringify(action.user);
 			return { ...state };
+		case "ADD_CARD":
+			state.data[state.user.nickname][action.key].stick.push({
+				id: Math.floor(Math.random() * 100000).toString(),
+				title: action.title,
+				cards: []
+			});
+			return { ...state };
 		default:
 			return state;
 	}

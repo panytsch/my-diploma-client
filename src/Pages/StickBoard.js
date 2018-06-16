@@ -72,7 +72,6 @@ class StickBoard extends React.Component {
 				this.props.data.data[nickname] &&
 				this.props.data.data[nickname][id]) ||
 			null;
-		console.log(obj);
 		return (
 			<div>
 				<Header autorize={false} registration={false} logout={true} />

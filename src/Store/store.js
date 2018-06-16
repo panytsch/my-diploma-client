@@ -1,6 +1,9 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import axios from "axios";
+
+import config from "../Configs/mainConfig";
 
 function userData(
 	state = {
@@ -36,6 +39,12 @@ function userData(
 				id: Math.floor(Math.random() * 100000).toString(),
 				title: action.title,
 				cards: []
+			});
+			axios.post(`${config.host}sticks`, {
+				token: state.user.token,
+				nickname: state.user.nickname,
+				title: action.title,
+				board: action.key
 			});
 			return { ...state };
 		default:

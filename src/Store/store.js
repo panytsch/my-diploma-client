@@ -19,8 +19,10 @@ function userData(
 		case "FETCH_DATA_SUCCESS":
 			let obj = Object.assign({}, action.data);
 			Object.values(obj).map(i => {
+				i.id = i.id.toString();
 				i.stick.length &&
 					i.stick.map(j => {
+						j.id = j.id.toString();
 						j.cards = j.item;
 						delete j.item;
 					});
@@ -36,17 +38,7 @@ function userData(
 			window.localStorage.trelloUser = JSON.stringify(action.user);
 			return { ...state };
 		case "ADD_CARD":
-			state.data[state.user.nickname][action.key].stick.push({
-				id: Math.floor(Math.random() * 100000).toString(),
-				title: action.title,
-				cards: []
-			});
-			axios.post(`${config.host}sticks`, {
-				token: state.user.token,
-				nickname: state.user.nickname,
-				title: action.title,
-				board: action.key
-			});
+			state.data[state.user.nickname][action.key]["stick"].push(action.payload);
 			return { ...state };
 		default:
 			return state;

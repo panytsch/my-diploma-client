@@ -32,6 +32,10 @@ class StickBoard extends React.Component {
 		this.state = {
 			addCardVisible: true
 		};
+		console.log("contsructor");
+	}
+	componentWillReceiveProps(nextProps) {
+		console.log(this.props.data);
 	}
 	componentWillMount() {
 		if (!this.props.data || !this.props.data.user) {
@@ -83,33 +87,42 @@ class StickBoard extends React.Component {
 						style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
 						draggable
 						editable
+						handleDragEnd={(cardId, sourceLaneId, targetLaneId, position) => {
+							console.log(cardId, sourceLaneId, targetLaneId, position);
+						}}
 					/>
 					<div className="aside">
-						{!this.state.addCardVisible && (
-							<div>
-								<input type="text" ref={e => (this.addCardInput = e)} />
-							</div>
-						)}
-						<ButtonTR
-							onClick={() => {
-								!this.state.addCardVisible &&
-									this.props.addCard(
-										id,
-										(this.addCardInput && this.addCardInput.value) || "default"
-									);
-								this.setVisibleCancel();
-							}}
-							text={this.state.addCardVisible ? "Add Card" : "Add"}
-							color="#03aa37"
-							hover="#067328"
-						/>
-						<ButtonTR
-							onClick={this.setVisibleCancel.bind(this)}
-							text="Cancel"
-							color="#fe5f5f"
-							hover="#ad0505"
-							display={this.state.addCardVisible ? "none" : "inline-block"}
-						/>
+						<div>
+							{!this.state.addCardVisible && (
+								<div>
+									<input type="text" ref={e => (this.addCardInput = e)} />
+								</div>
+							)}
+							<ButtonTR
+								onClick={() => {
+									!this.state.addCardVisible &&
+										this.props.addCard(
+											this.props.data.user.token,
+											nickname,
+											(this.addCardInput && this.addCardInput.value) ||
+												"default",
+											id
+										);
+									this.setVisibleCancel();
+								}}
+								text={this.state.addCardVisible ? "Add Card" : "Add"}
+								color="#03aa37"
+								hover="#067328"
+							/>
+							<ButtonTR
+								onClick={this.setVisibleCancel.bind(this)}
+								text="Cancel"
+								color="#fe5f5f"
+								hover="#ad0505"
+								display={this.state.addCardVisible ? "none" : "inline-block"}
+							/>
+						</div>
+						<div />
 					</div>
 				</Contain>
 			</div>
@@ -123,12 +136,9 @@ const mapDispatchToProps = dispatch => ({
 			type: "FETCH_DATA_SUCCESS",
 			data: data
 		}),
-	addCard: (key, title) =>
-		dispatch({
-			type: "ADD_CARD",
-			key: key,
-			title: title
-		})
+	addCard: (token, nickname, title, boardId) => {
+		dispatch(config.postLine(token, nickname, title, boardId));
+	}
 });
 
 const mapStateToProps = state => ({

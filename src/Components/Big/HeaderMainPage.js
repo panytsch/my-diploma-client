@@ -3,7 +3,7 @@ import { css } from "react-emotion";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 
-import config from "../../Configs/mainConfig";
+// import config from "../../Configs/mainConfig";
 import ButtonTR from "../Small/Button/ButtonTR";
 
 const navClass = css({
@@ -57,7 +57,10 @@ class HeaderMainPage extends React.Component {
 						{this.props.logout && (
 							<li>
 								<ButtonTR
-									onClick={this.props.clearUser}
+									onClick={() => {
+										this.props.clearUser();
+										this.props.history.push("/");
+									}}
 									text="Logout"
 									color="rgb(142, 157, 218)"
 									hover="rgb(103, 68, 126)"

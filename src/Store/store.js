@@ -29,6 +29,7 @@ function userData(
 			return { ...state };
 		case "USER_CLEAR":
 			state.user = {};
+			window.localStorage.trelloUser = "";
 			return { ...state };
 		case "SET_USER":
 			state.user = action.user;

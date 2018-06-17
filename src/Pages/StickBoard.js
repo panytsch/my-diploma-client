@@ -86,7 +86,9 @@ class StickBoard extends React.Component {
 					/>
 					<div className="aside">
 						{!this.state.addCardVisible && (
-							<input type="text" ref={e => (this.addCardInput = e)} />
+							<div>
+								<input type="text" ref={e => (this.addCardInput = e)} />
+							</div>
 						)}
 						<ButtonTR
 							onClick={() => {
@@ -100,6 +102,13 @@ class StickBoard extends React.Component {
 							text={this.state.addCardVisible ? "Add Card" : "Add"}
 							color="#03aa37"
 							hover="#067328"
+						/>
+						<ButtonTR
+							onClick={this.setVisibleCancel.bind(this)}
+							text="Cancel"
+							color="#fe5f5f"
+							hover="#ad0505"
+							display={this.state.addCardVisible ? "none" : "inline-block"}
 						/>
 					</div>
 				</Contain>

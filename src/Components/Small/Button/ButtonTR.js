@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "react-emotion";
 
 const Diva = styled("div")`
-	display: inline-block;
+	display: ${props => props.display || "inline-block"};
 	${"button"} {
 		padding: 3px 10px;
 		border: none;

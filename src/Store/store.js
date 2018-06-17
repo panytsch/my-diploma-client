@@ -1,6 +1,9 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import axios from "axios";
+
+import config from "../Configs/mainConfig";
 
 function userData(
 	state = {
@@ -16,17 +19,26 @@ function userData(
 		case "FETCH_DATA_SUCCESS":
 			let obj = Object.assign({}, action.data);
 			Object.values(obj).map(i => {
-				i.cards = i.stick;
-				delete i.stick;
+				i.id = i.id.toString();
+				i.stick.length &&
+					i.stick.map(j => {
+						j.id = j.id.toString();
+						j.cards = j.item;
+						delete j.item;
+					});
 			});
 			state.data[state.user.nickname] = obj;
 			return { ...state };
 		case "USER_CLEAR":
 			state.user = {};
+			window.localStorage.trelloUser = "";
 			return { ...state };
 		case "SET_USER":
 			state.user = action.user;
 			window.localStorage.trelloUser = JSON.stringify(action.user);
+			return { ...state };
+		case "ADD_CARD":
+			state.data[state.user.nickname][action.key]["stick"].push(action.payload);
 			return { ...state };
 		default:
 			return state;

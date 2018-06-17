@@ -10,7 +10,6 @@ import Card from "../Components/Small/Card/CardOnBoard";
 
 const flexWrap = css({
 	display: "flex",
-	justifyContent: "space-between",
 	flexDirection: "row",
 	justifyContent: "flex-start",
 	alignItems: "stratch",

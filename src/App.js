@@ -12,21 +12,21 @@ import "./styles/reset.css";
 import "./styles/main.css";
 
 class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <div>
-            <Route exact path="/" component={MainPage} />
-            <Route path="/authorize" component={AuthPage} />
-            <Route path="/registration" component={RegPage} />
-            <Route path="/board/:board" component={StickBoard} />
-            <Route path="/dashboard/:nickname" component={DashBoard} />
-          </div>
-        </Router>
-      </Provider>
-    );
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<Router>
+					<div>
+						<Route exact path="/" component={MainPage} />
+						<Route path="/authorize" component={AuthPage} />
+						<Route path="/registration" component={RegPage} />
+						<Route path="/board/:board" component={StickBoard} />
+						<Route path="/dashboard/:nickname" component={DashBoard} />
+					</div>
+				</Router>
+			</Provider>
+		);
+	}
 }
 
 export default App;

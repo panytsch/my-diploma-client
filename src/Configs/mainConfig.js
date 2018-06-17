@@ -26,6 +26,26 @@ const config = {
 					payload: newState
 				});
 			});
+	},
+	getBoards: (token, nickname) => dispatch => {
+		let _this = this.a;
+		return axios
+			.get(`${_this.host}boards`, {
+				params: {
+					nickname: nickname,
+					token: token
+				}
+			})
+			.then(({ data }) => {
+				let obj = {};
+				data.map(i => {
+					obj[i.id] = i;
+				});
+				dispatch({
+					type: "FETCH_DATA_SUCCESS",
+					data: data
+				});
+			});
 	}
 };
 export default config;

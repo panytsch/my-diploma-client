@@ -44,20 +44,10 @@ class StickBoard extends React.Component {
 			!this.props.data.data ||
 			!this.props.data.data[this.props.data.user.nickname]
 		) {
-			axios
-				.get(`${config.host}boards`, {
-					params: {
-						nickname: this.props.data.user.nickname,
-						token: this.props.data.user.token
-					}
-				})
-				.then(({ data }) => {
-					let obj = {};
-					data.map(i => {
-						obj[i.id] = i;
-					});
-					this.props.fetchData(obj);
-				});
+			this.props.fetchData(
+				this.props.data.user.token,
+				this.props.data.user.nickname
+			);
 		}
 	}
 	setVisibleCancel() {
@@ -131,11 +121,7 @@ class StickBoard extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	fetchData: data =>
-		dispatch({
-			type: "FETCH_DATA_SUCCESS",
-			data: data
-		}),
+	fetchData: (token, nickname) => dispatch(config.getBoards(token, nickname)),
 	addCard: (token, nickname, title, boardId) => {
 		dispatch(config.postLine(token, nickname, title, boardId));
 	}

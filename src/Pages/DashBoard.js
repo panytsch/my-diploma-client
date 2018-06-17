@@ -30,21 +30,10 @@ class DashBoard extends React.Component {
 		if (data[[nickname]]) {
 			return;
 		} else {
-			console.log("DashBoard page FETCH");
-			axios
-				.get(`${config.host}boards`, {
-					params: {
-						nickname: nickname,
-						token: this.props.data.user.token
-					}
-				})
-				.then(({ data }) => {
-					let obj = {};
-					data.map(i => {
-						obj[i.id] = i;
-					});
-					this.props.fetchData(obj);
-				});
+			this.props.fetchData(
+				this.props.data.user.token,
+				this.props.data.user.nickname
+			);
 		}
 	}
 	render() {
@@ -69,11 +58,7 @@ class DashBoard extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	fetchData: data =>
-		dispatch({
-			type: "FETCH_DATA_SUCCESS",
-			data: data
-		})
+	fetchData: (token, nickname) => dispatch(config.getBoards(token, nickname))
 });
 
 const mapStateToProps = state => ({

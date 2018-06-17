@@ -51,6 +51,9 @@ function userData(
 			);
 			state.data[state.user.nickname][action.boardId]["stick"].splice(key, 1);
 			return { ...state };
+		case "ADD_BOARD":
+			state.data[state.user.nickname][action.payload.id] = action.payload;
+			return { ...state };
 		default:
 			return state;
 	}

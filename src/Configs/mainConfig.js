@@ -13,7 +13,6 @@ const config = {
 				board: boardId
 			})
 			.then(({ data }) => {
-				console.log(data);
 				newState = {
 					id: data.id.toString(),
 					title: data.title,
@@ -63,6 +62,23 @@ const config = {
 						type: "REMOVE_LINE",
 						lineId: lineId,
 						boardId: boardId
+					});
+				}
+			});
+	},
+	addBoard: (token, nickname, title) => dispatch => {
+		let _this = this.a;
+		return axios
+			.post(`${_this.host}boards`, {
+				token: token,
+				nickname: nickname,
+				title: title
+			})
+			.then(({ data }) => {
+				if (data) {
+					dispatch({
+						type: "ADD_BOARD",
+						payload: data
 					});
 				}
 			});

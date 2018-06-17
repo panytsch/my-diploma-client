@@ -7,6 +7,7 @@ import { css } from "react-emotion";
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
 import Card from "../Components/Small/Card/CardOnBoard";
+import NewBoard from "../Components/Small/NewBoard/NewBoard";
 
 const flexWrap = css({
 	display: "flex",
@@ -51,6 +52,15 @@ class DashBoard extends React.Component {
 								<Card data={data[nickname][i]} />
 							</Link>
 						))}
+					<NewBoard
+						handleAdd={title => {
+							this.props.addOneBoard(
+								this.props.data.user.token,
+								nickname,
+								title
+							);
+						}}
+					/>
 				</div>
 			</div>
 		);
@@ -58,7 +68,9 @@ class DashBoard extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	fetchData: (token, nickname) => dispatch(config.getBoards(token, nickname))
+	fetchData: (token, nickname) => dispatch(config.getBoards(token, nickname)),
+	addOneBoard: (token, nickname, title) =>
+		dispatch(config.addBoard(token, nickname, title))
 });
 
 const mapStateToProps = state => ({

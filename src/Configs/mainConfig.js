@@ -13,10 +13,12 @@ const config = {
 				board: boardId
 			})
 			.then(({ data }) => {
+				console.log(data);
 				newState = {
 					id: data.id.toString(),
 					title: data.title,
-					cards: data.item
+					cards: data.item,
+					position: data.position
 				};
 				dispatch({
 					type: "ADD_CARD",

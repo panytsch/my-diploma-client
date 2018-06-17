@@ -40,6 +40,17 @@ function userData(
 		case "ADD_CARD":
 			state.data[state.user.nickname][action.key]["stick"].push(action.payload);
 			return { ...state };
+		case "REMOVE_LINE":
+			let key;
+			state.data[state.user.nickname][action.boardId]["stick"].map(
+				(item, ka) => {
+					if (item.id == action.lineId) {
+						key = ka;
+					}
+				}
+			);
+			state.data[state.user.nickname][action.boardId]["stick"].splice(key, 1);
+			return { ...state };
 		default:
 			return state;
 	}

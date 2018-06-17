@@ -8,6 +8,7 @@ import styled from "react-emotion";
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
 import ButtonTR from "../Components/Small/Button/ButtonTR";
+import LaneHeader from "../Components/Small/LaneHeader/LaneHeader";
 
 const defaultData = [
 	{
@@ -34,9 +35,6 @@ class StickBoard extends React.Component {
 		};
 		console.log("contsructor");
 	}
-	componentWillReceiveProps(nextProps) {
-		console.log(this.props.data);
-	}
 	componentWillMount() {
 		if (!this.props.data || !this.props.data.user) {
 			this.props.history.push("/");
@@ -57,6 +55,7 @@ class StickBoard extends React.Component {
 			})
 		);
 	}
+
 	render() {
 		const id = this.props.match.params.board;
 		const { nickname } = this.props.data.user || null;
@@ -77,6 +76,14 @@ class StickBoard extends React.Component {
 						style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
 						draggable
 						editable
+						customLaneHeader={
+							<LaneHeader
+								handleClick={this.props.deleteLine}
+								token={this.props.data.user.token}
+								nickname={nickname}
+								boardId={id}
+							/>
+						}
 						handleDragEnd={(cardId, sourceLaneId, targetLaneId, position) => {
 							console.log(cardId, sourceLaneId, targetLaneId, position);
 						}}
@@ -124,7 +131,9 @@ const mapDispatchToProps = dispatch => ({
 	fetchData: (token, nickname) => dispatch(config.getBoards(token, nickname)),
 	addCard: (token, nickname, title, boardId) => {
 		dispatch(config.postLine(token, nickname, title, boardId));
-	}
+	},
+	deleteLine: (token, nickname, lineId, boardId) =>
+		dispatch(config.removeLine(token, nickname, lineId, boardId))
 });
 
 const mapStateToProps = state => ({

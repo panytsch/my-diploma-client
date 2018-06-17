@@ -46,6 +46,14 @@ const config = {
 					data: data
 				});
 			});
+	},
+	removeLine: (token, nickname, lineId, boardId) => dispatch => {
+		let _this = this.a;
+		dispatch({
+			type: "REMOVE_LINE",
+			lineId: lineId,
+			boardId: boardId
+		});
 	}
 };
 export default config;

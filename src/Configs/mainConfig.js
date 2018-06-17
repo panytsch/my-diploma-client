@@ -49,11 +49,23 @@ const config = {
 	},
 	removeLine: (token, nickname, lineId, boardId) => dispatch => {
 		let _this = this.a;
-		dispatch({
-			type: "REMOVE_LINE",
-			lineId: lineId,
-			boardId: boardId
-		});
+		return axios
+			.delete(`${_this.host}sticks`, {
+				params: {
+					nickname: nickname,
+					token: token,
+					id: lineId
+				}
+			})
+			.then(({ data }) => {
+				if (data.status) {
+					dispatch({
+						type: "REMOVE_LINE",
+						lineId: lineId,
+						boardId: boardId
+					});
+				}
+			});
 	}
 };
 export default config;

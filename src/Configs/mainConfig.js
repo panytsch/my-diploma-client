@@ -13,16 +13,58 @@ const config = {
 				board: boardId
 			})
 			.then(({ data }) => {
+				console.log(data);
 				newState = {
 					id: data.id.toString(),
 					title: data.title,
-					cards: data.item
+					cards: data.item,
+					position: data.position
 				};
 				dispatch({
 					type: "ADD_CARD",
 					key: boardId,
 					payload: newState
 				});
+			});
+	},
+	getBoards: (token, nickname) => dispatch => {
+		let _this = this.a;
+		return axios
+			.get(`${_this.host}boards`, {
+				params: {
+					nickname: nickname,
+					token: token
+				}
+			})
+			.then(({ data }) => {
+				let obj = {};
+				data.map(i => {
+					obj[i.id] = i;
+				});
+				dispatch({
+					type: "FETCH_DATA_SUCCESS",
+					data: data
+				});
+			});
+	},
+	removeLine: (token, nickname, lineId, boardId) => dispatch => {
+		let _this = this.a;
+		return axios
+			.delete(`${_this.host}sticks`, {
+				params: {
+					nickname: nickname,
+					token: token,
+					id: lineId
+				}
+			})
+			.then(({ data }) => {
+				if (data.status) {
+					dispatch({
+						type: "REMOVE_LINE",
+						lineId: lineId,
+						boardId: boardId
+					});
+				}
 			});
 	}
 };

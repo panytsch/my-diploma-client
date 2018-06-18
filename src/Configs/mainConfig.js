@@ -82,6 +82,26 @@ const config = {
           });
         }
       });
+  },
+  addItem: (token, nickname, title, description, lineId) => dispatch => {
+    let _this = this.a;
+    // return
+    axios
+      .post(`${_this.host}cards`, {
+        token: token,
+        nickname: nickname,
+        title: title,
+        description: description,
+        lineId: lineId
+      })
+      .then(({ data }) => {
+        if (data) {
+          dispatch({
+            type: "ADD_CARD_ITEM",
+            payload: data
+          });
+        }
+      });
   }
 };
 export default config;

@@ -6,64 +6,75 @@ import axios from "axios";
 import config from "../Configs/mainConfig";
 
 function userData(
-	state = {
-		data: {},
-		user:
-			(window.localStorage.trelloUser &&
-				JSON.parse(window.localStorage.trelloUser)) ||
-			null
-	},
-	action
+  state = {
+    data: {},
+    user:
+      (window.localStorage.trelloUser &&
+        JSON.parse(window.localStorage.trelloUser)) ||
+      null
+  },
+  action
 ) {
-	switch (action.type) {
-		case "FETCH_DATA_SUCCESS":
-			let obj = Object.assign({}, action.data);
-			Object.values(obj).map(i => {
-				i.id = i.id.toString();
-				i.stick.length &&
-					i.stick.map(j => {
-						j.id = j.id.toString();
-						j.cards = j.item;
-						delete j.item;
-					});
-			});
-			state.data[state.user.nickname] = obj;
-			return { ...state };
-		case "USER_CLEAR":
-			state.user = {};
-			window.localStorage.trelloUser = "";
-			return { ...state };
-		case "SET_USER":
-			state.user = action.user;
-			window.localStorage.trelloUser = JSON.stringify(action.user);
-			return { ...state };
-		case "ADD_CARD":
-			state.data[state.user.nickname][action.key]["stick"].push(action.payload);
-			return { ...state };
-		case "REMOVE_LINE":
-			let key;
-			state.data[state.user.nickname][action.boardId]["stick"].map(
-				(item, ka) => {
-					if (item.id == action.lineId) {
-						key = ka;
-					}
-				}
-			);
-			state.data[state.user.nickname][action.boardId]["stick"].splice(key, 1);
-			return { ...state };
-		case "ADD_BOARD":
-			state.data[state.user.nickname][action.payload.id] = action.payload;
-			return { ...state };
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case "FETCH_DATA_SUCCESS":
+      let obj = Object.assign({}, action.data);
+      Object.values(obj).map(i => {
+        i.id = i.id.toString();
+        i.stick.length &&
+          i.stick.map(j => {
+            j.id = j.id.toString();
+            j.cards = j.item;
+            delete j.item;
+          });
+      });
+      state.data[state.user.nickname] = obj;
+      return { ...state };
+    case "USER_CLEAR":
+      state.user = {};
+      window.localStorage.trelloUser = "";
+      return { ...state };
+    case "SET_USER":
+      state.user = action.user;
+      window.localStorage.trelloUser = JSON.stringify(action.user);
+      return { ...state };
+    case "ADD_CARD":
+      state.data[state.user.nickname][action.key]["stick"].push(action.payload);
+      return { ...state };
+    case "ADD_CARD_ITEM":
+      state.data[state.user.nickname][action.payload.stick.board.id].stick[
+        action.payload.stick.position - 1
+      ].cards[action.payload.position - 1] = {
+        id: action.payload.id,
+        position: action.payload.position,
+        title: action.payload.title,
+        description: action.payload.description,
+        laneId: action.payload.stick.id
+      };
+      return { ...state };
+    case "REMOVE_LINE":
+      let key;
+      state.data[state.user.nickname][action.boardId]["stick"].map(
+        (item, ka) => {
+          if (item.id == action.lineId) {
+            key = ka;
+          }
+        }
+      );
+      state.data[state.user.nickname][action.boardId]["stick"].splice(key, 1);
+      return { ...state };
+    case "ADD_BOARD":
+      state.data[state.user.nickname][action.payload.id] = action.payload;
+      return { ...state };
+    default:
+      return state;
+  }
 }
 
 const reducers = combineReducers({ userData });
 
 const store = createStore(
-	reducers,
-	composeWithDevTools(applyMiddleware(thunk))
+  reducers,
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export default store;

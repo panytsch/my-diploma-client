@@ -83,7 +83,7 @@ class StickBoard extends React.Component {
             draggable
             editable
             onCardAdd={(card, laneId) => {
-              this.props.addCard(
+              this.props.addCardItem(
                 this.props.data.user.token,
                 nickname,
                 card.title,
@@ -149,7 +149,7 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteLine: (token, nickname, lineId, boardId) =>
     dispatch(config.removeLine(token, nickname, lineId, boardId)),
-  addCard: (token, nickname, title, description, lineId) =>
+  addCardItem: (token, nickname, title, description, lineId) =>
     dispatch(config.addItem(token, nickname, title, description, lineId))
 });
 

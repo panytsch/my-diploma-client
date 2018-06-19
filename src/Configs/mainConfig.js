@@ -102,6 +102,34 @@ const config = {
           });
         }
       });
+  },
+  changeCardPosition: (
+    token,
+    nickname,
+    itemId,
+    lineId,
+    newLineId,
+    position,
+    boardId
+  ) => dispatch => {
+    let _this = this.a;
+    return axios
+      .put(`${_this.host}cards`, {
+        token: token, //back
+        nickname: nickname, //back
+        itemId: itemId,
+        lineId: lineId,
+        newLineId: newLineId,
+        position: position + 1,
+        board: boardId
+      })
+      .then(({ data }) => {
+        dispatch({
+          type: "CHANGE_ITEM_POSITION",
+          payload: JSON.parse(data),
+          board: boardId
+        });
+      });
   }
 };
 export default config;

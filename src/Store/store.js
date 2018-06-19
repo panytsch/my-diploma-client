@@ -5,6 +5,13 @@ import axios from "axios";
 
 import config from "../Configs/mainConfig";
 
+const sortDataOnBoard = data => {
+  data.stick.map(item => {
+    item.cards.sort((a, b) => a.position - b.position);
+  });
+  return data;
+};
+
 function userData(
   state = {
     data: {},
@@ -26,6 +33,7 @@ function userData(
             j.cards = j.item;
             delete j.item;
           });
+        i = sortDataOnBoard(i);
       });
       state.data[state.user.nickname] = obj;
       return { ...state };
@@ -47,9 +55,23 @@ function userData(
         id: action.payload.id,
         position: action.payload.position,
         title: action.payload.title,
-        description: action.payload.description,
-        laneId: action.payload.stick.id
+        description: action.payload.description
+        // laneId: action.payload.stick.id
       };
+      return { ...state };
+    case "CHANGE_ITEM_POSITION":
+      state.data[state.user.nickname][action.board].stick =
+        action.payload.stick;
+      state.data[state.user.nickname][action.board].stick.map(i => {
+        i.id = i.id.toString();
+        i.cards = i.item;
+        delete i.item;
+      });
+      state.data[state.user.nickname][action.board] = sortDataOnBoard(
+        state.data[state.user.nickname][action.board]
+      );
+      console.log(action.payload);
+      console.log(state.data[state.user.nickname][action.board]);
       return { ...state };
     case "REMOVE_LINE":
       let key;

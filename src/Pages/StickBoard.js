@@ -71,14 +71,16 @@ class StickBoard extends React.Component {
         this.props.data.data[nickname] &&
         this.props.data.data[nickname][id]) ||
       null;
+    let linesData = {
+      lanes: (obj && [...obj.stick]) || defaultData
+    };
     return (
       <div>
         <Header autorize={false} registration={false} logout={true} />
         <Contain>
           <Board
-            data={{
-              lanes: (obj && [...obj.stick]) || defaultData
-            }}
+            data={{ ...linesData }}
+            onDataChange={newData => ({ ...newData })}
             style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
             draggable
             editable
@@ -99,6 +101,10 @@ class StickBoard extends React.Component {
                 boardId={id}
               />
             }
+            handleDragStart={(cardId, laneId) => {
+              console.log("card", cardId);
+              console.log("lane", laneId);
+            }}
             handleDragEnd={(cardId, sourceLaneId, targetLaneId, position) => {
               console.log(cardId, sourceLaneId, targetLaneId, position);
               this.props.changeCardPos(

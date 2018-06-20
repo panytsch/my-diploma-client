@@ -85,8 +85,7 @@ const config = {
   },
   addItem: (token, nickname, title, description, lineId) => dispatch => {
     let _this = this.a;
-    // return
-    axios
+    return axios
       .post(`${_this.host}cards`, {
         token: token,
         nickname: nickname,

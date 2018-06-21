@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
 import Board from "react-trello";
 import styled from "react-emotion";
 

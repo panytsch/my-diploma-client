@@ -1,9 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import axios from "axios";
-
-import config from "../Configs/mainConfig";
 
 const sortDataOnBoard = data => {
   data.stick.map(item => {

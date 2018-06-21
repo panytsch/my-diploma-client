@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
-import axios from "axios";
 import { css } from "react-emotion";
 
 import config from "../Configs/mainConfig";

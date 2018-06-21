@@ -71,14 +71,16 @@ class StickBoard extends React.Component {
         this.props.data.data[nickname] &&
         this.props.data.data[nickname][id]) ||
       null;
+    let linesData = {
+      lanes: (obj && [...obj.stick]) || defaultData
+    };
     return (
       <div>
         <Header autorize={false} registration={false} logout={true} />
         <Contain>
           <Board
-            data={{
-              lanes: (obj && [...obj.stick]) || defaultData
-            }}
+            data={{ ...linesData }}
+            onDataChange={newData => ({ ...newData })}
             style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
             draggable
             editable
@@ -99,9 +101,23 @@ class StickBoard extends React.Component {
                 boardId={id}
               />
             }
+            handleDragStart={(cardId, laneId) => {
+              console.log("card", cardId);
+              console.log("lane", laneId);
+            }}
             handleDragEnd={(cardId, sourceLaneId, targetLaneId, position) => {
               console.log(cardId, sourceLaneId, targetLaneId, position);
+              this.props.changeCardPos(
+                this.props.data.user.token,
+                nickname,
+                cardId,
+                sourceLaneId,
+                targetLaneId,
+                position,
+                id
+              );
             }}
+            // laneSortFunction={(card1, card2) => card1.position - card2.position}
           />
           <div className="aside">
             <div className="newLine">
@@ -150,7 +166,27 @@ const mapDispatchToProps = dispatch => ({
   deleteLine: (token, nickname, lineId, boardId) =>
     dispatch(config.removeLine(token, nickname, lineId, boardId)),
   addCardItem: (token, nickname, title, description, lineId) =>
-    dispatch(config.addItem(token, nickname, title, description, lineId))
+    dispatch(config.addItem(token, nickname, title, description, lineId)),
+  changeCardPos: (
+    token,
+    nickname,
+    itemId,
+    lineId,
+    newLineId,
+    position,
+    boardId
+  ) =>
+    dispatch(
+      config.changeCardPosition(
+        token,
+        nickname,
+        itemId,
+        lineId,
+        newLineId,
+        position,
+        boardId
+      )
+    )
 });
 
 const mapStateToProps = state => ({

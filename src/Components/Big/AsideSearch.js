@@ -31,10 +31,26 @@ class AsideSearch extends React.Component {
     }
   }
 
+  addUserOnBoard(id, boardId) {
+    axios
+      .put(`${config.host}users/add`, {
+        token: this.props.token,
+        nickname: this.props.nickname,
+        id: id, // User idea
+        boardId: boardId
+      })
+      .then(({ data }) => {
+        if (data.status) {
+          console.log("OK");
+        }
+      });
+  }
+
   render() {
     return (
       <div>
         <div className="inputUser">
+          <p>Add user on the board</p>
           <input
             type="text"
             ref={e => (this.input = e)}
@@ -44,7 +60,12 @@ class AsideSearch extends React.Component {
         {this.state.data.map((i, k) => (
           <div className="option" key={k}>
             <div className="checkText">{i.nickname}</div>
-            <ButtonTR text="&#9989;" />
+            <ButtonTR
+              text="&#9989;"
+              onClick={() => {
+                this.addUserOnBoard(i.id, this.props.boardId);
+              }}
+            />
           </div>
         ))}
       </div>

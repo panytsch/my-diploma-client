@@ -66,6 +66,28 @@ const config = {
         }
       });
   },
+  removeCard: (token, nickname, lineId, cardId, boardId) => dispatch => {
+    let _this = this.a;
+    return axios
+      .delete(`${_this.host}cards`, {
+        params: {
+          nickname: nickname,
+          token: token,
+          id: cardId,
+          line: lineId
+        }
+      })
+      .then(({ data }) => {
+        if (data.status) {
+          dispatch({
+            type: "REMOVE_CARD",
+            lineId: lineId,
+            cardId: cardId,
+            boardId: boardId
+          });
+        }
+      });
+  },
   addBoard: (token, nickname, title) => dispatch => {
     let _this = this.a;
     return axios

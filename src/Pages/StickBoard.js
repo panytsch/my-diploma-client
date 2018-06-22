@@ -163,6 +163,7 @@ class StickBoard extends React.Component {
             <AsideSearch
               token={this.props.data.user.token}
               nickname={nickname}
+              boardId={id}
             />
             <div />
           </div>

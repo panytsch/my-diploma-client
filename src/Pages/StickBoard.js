@@ -6,6 +6,7 @@ import styled from "react-emotion";
 
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
+import AsideSearch from "../Components/Big/AsideSearch";
 import ButtonTR from "../Components/Small/Button/ButtonTR";
 import LaneHeader from "../Components/Small/LaneHeader/LaneHeader";
 
@@ -159,6 +160,10 @@ class StickBoard extends React.Component {
                 display={this.state.addCardVisible ? "none" : "inline-block"}
               />
             </div>
+            <AsideSearch
+              token={this.props.data.user.token}
+              nickname={nickname}
+            />
             <div />
           </div>
         </Contain>

@@ -82,6 +82,16 @@ class StickBoard extends React.Component {
             onDataChange={newData => ({ ...newData })}
             style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
             draggable
+            onCardDelete={(cardId, lineId) => {
+              console.log(cardId, lineId);
+              this.props.removeCardOne(
+                this.props.data.user.token,
+                nickname,
+                +lineId,
+                +cardId,
+                id
+              );
+            }}
             editable
             onCardAdd={(card, laneId) => {
               this.props.addCardItem(
@@ -164,6 +174,8 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteLine: (token, nickname, lineId, boardId) =>
     dispatch(config.removeLine(token, nickname, lineId, boardId)),
+  removeCardOne: (token, nickname, lineId, cardId, boardId) =>
+    dispatch(config.removeCard(token, nickname, lineId, cardId, boardId)),
   addCardItem: (token, nickname, title, description, lineId) =>
     dispatch(config.addItem(token, nickname, title, description, lineId)),
   changeCardPos: (

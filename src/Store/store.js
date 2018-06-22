@@ -79,6 +79,25 @@ function userData(
       );
       state.data[state.user.nickname][action.boardId]["stick"].splice(key, 1);
       return { ...state };
+    case "REMOVE_CARD":
+      let cardKey;
+      let lineKey;
+      state.data[state.user.nickname][action.boardId].stick.map(
+        (stick, line) => {
+          if (stick.id == action.lineId) {
+            lineKey = line;
+            stick.cards.map((card, k) => {
+              if (card.id == action.cardId) {
+                cardKey = k;
+              }
+            });
+          }
+        }
+      );
+      state.data[state.user.nickname][action.boardId].stick[
+        lineKey
+      ].cards.splice(cardKey, 1);
+      return { ...state };
     case "ADD_BOARD":
       state.data[state.user.nickname][action.payload.id] = action.payload;
       return { ...state };

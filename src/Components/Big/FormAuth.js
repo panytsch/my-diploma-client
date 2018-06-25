@@ -24,86 +24,88 @@ class FormAuth extends React.Component {
       };
     }
     return (
-      <Styles>
+      <div>
         <Header autorize={!this.props.auth} registration={this.props.auth} />
-        <h1>{this.props.auth ? "Welcome Back!" : "Try it!"}</h1>
-        <Form
-          initialValues={{
-            email: query.email || "",
-            boardId: query.boardId || null
-          }}
-          onSubmit={_values => {
-            if (this.props.auth) {
-              axios
-                .get(`${config.host}users/authorize`, {
-                  params: _values
-                })
-                .then(({ data }) => {
-                  this.props.setUserToState({
-                    nickname: data.nickname,
-                    token: data.token
+        <Styles>
+          <h1>{this.props.auth ? "Welcome Back!" : "Try it!"}</h1>
+          <Form
+            initialValues={{
+              email: query.email || "",
+              boardId: query.boardId || null
+            }}
+            onSubmit={_values => {
+              if (this.props.auth) {
+                axios
+                  .get(`${config.host}users/authorize`, {
+                    params: _values
+                  })
+                  .then(({ data }) => {
+                    this.props.setUserToState({
+                      nickname: data.nickname,
+                      token: data.token
+                    });
+                    this.props.history.push("/");
                   });
-                  this.props.history.push("/");
-                });
-            } else {
-              axios
-                .post(`${config.host}users/registration`, _values)
-                .then(({ data }) => {
-                  this.props.setUserToState({
-                    nickname: data.nickname,
-                    token: data.token
+              } else {
+                axios
+                  .post(`${config.host}users/registration`, _values)
+                  .then(({ data }) => {
+                    this.props.setUserToState({
+                      nickname: data.nickname,
+                      token: data.token
+                    });
+                    this.props.history.push("/");
                   });
-                  this.props.history.push("/");
-                });
-            }
-          }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label>Login</label>
-                <Field
-                  name="nickname"
-                  component="input"
-                  type="text"
-                  placeholder="Nickname"
-                />
-              </div>
-              <div>
-                <label>Password</label>
-                <Field
-                  name="password"
-                  component="input"
-                  type="password"
-                  placeholder="Password"
-                />
-              </div>
-              {!this.props.auth && (
+              }
+            }}
+            render={({ handleSubmit, form, submitting, pristine, values }) => (
+              <form onSubmit={handleSubmit}>
                 <div>
-                  <label>Email</label>
+                  <label>Login</label>
                   <Field
-                    name="email"
+                    name="nickname"
                     component="input"
-                    type="email"
-                    placeholder="Email"
+                    type="text"
+                    placeholder="Nickname"
                   />
                 </div>
-              )}
-              <div className="buttons">
-                <button type="submit" disabled={submitting || pristine}>
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  onClick={form.reset}
-                  disabled={submitting || pristine}
-                >
-                  Reset
-                </button>
-              </div>
-            </form>
-          )}
-        />
-      </Styles>
+                <div>
+                  <label>Password</label>
+                  <Field
+                    name="password"
+                    component="input"
+                    type="password"
+                    placeholder="Password"
+                  />
+                </div>
+                {!this.props.auth && (
+                  <div>
+                    <label>Email</label>
+                    <Field
+                      name="email"
+                      component="input"
+                      type="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                )}
+                <div className="buttons">
+                  <button type="submit" disabled={submitting || pristine}>
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={form.reset}
+                    disabled={submitting || pristine}
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+            )}
+          />
+        </Styles>
+      </div>
     );
   }
 }

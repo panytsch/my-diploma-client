@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from "react-emotion";
 
 const btn = (light, dark) => css`
   white-space: nowrap;
@@ -33,46 +33,43 @@ const btnDefault = css`
 
 const btnPrimary = btn("#4f93ce", "#285f8f");
 
-export default styled.div`
-  font-family: sans-serif;
-
-  h1 {
+export default styled("div")`
+  font-family: Ubuntu, sans-serif;
+  ${"h1"} {
+    font-size: 25px;
+    margin: 2em 0;
     text-align: center;
     color: #222;
   }
-
-  & > div {
+  ${"& > div"} {
     text-align: center;
   }
-
-  a {
+  ${"a"} {
     display: block;
     text-align: center;
     color: #222;
   }
-
-  form {
+  ${"form"} {
     max-width: 500px;
     margin: 10px auto;
     border: 1px solid #ccc;
     padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
-
-    & > div {
+    ${"& > div"} {
       display: flex;
       flex-flow: row nowrap;
       line-height: 2em;
       margin: 5px;
-      & > label {
+      ${"& > label"} {
         color: #333;
         width: 110px;
         font-size: 1em;
         line-height: 32px;
       }
-      & > input,
-      & > select,
-      & > textarea {
+      ${"& > input"},
+      ${"& > select"},
+      ${"& > textarea"} {
         flex: 1;
         padding: 3px 5px;
         font-size: 1em;
@@ -80,39 +77,33 @@ export default styled.div`
         border: 1px solid #ccc;
         border-radius: 3px;
       }
-      & > input[type="checkbox"] {
+      ${'& > input[type="checkbox"]'} {
         margin-top: 7px;
       }
-      & > div {
+      ${"& > div"} {
         margin-left: 16px;
-        & > label {
+        ${"& > label"} {
           display: block;
-          & > input {
+          ${"& > input"} {
             margin-right: 3px;
           }
         }
       }
     }
-    & > .buttons {
+    ${"& > .buttons"} {
       display: flex;
       flex-flow: row nowrap;
       justify-content: center;
       margin-top: 15px;
     }
-    button {
+    ${"button"} {
       margin: 0 10px;
-      &[type="submit"] {
+      ${'&[type="submit"]'} {
         ${btnPrimary};
       }
-      &[type="button"] {
+      ${'&[type="button"]'} {
         ${btnDefault};
       }
-    }
-    pre {
-      border: 1px solid #ccc;
-      background: rgba(0, 0, 0, 0.1);
-      box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
-      padding: 20px;
     }
   }
 `;

@@ -5,6 +5,33 @@ import styled from "react-emotion";
 import config from "../../Configs/mainConfig";
 import ButtonTR from "../Small/Button/ButtonTR";
 
+const Wrap = styled("div")`
+  display: block;
+  ${"small"} {
+    font-size: 0.8em;
+    color: rgb(82, 88, 72);
+    display: block;
+  }
+  ,
+  ${"input"} {
+    margin: 5px;
+    padding: 0.2em 0.5em;
+    ${"&:focus"} {
+      outline: none;
+    }
+  }
+  ,
+  ${"& .option"} {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: column;
+    ${"& .item"} {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+`;
+
 class AsideSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -20,10 +47,12 @@ class AsideSearch extends React.Component {
           params: {
             token: this.props.token,
             nickname: this.props.nickname,
-            text: this.input.value
+            text: this.input.value,
+            boardId: this.props.boardId
           }
         })
         .then(({ data }) => {
+          console.log(data);
           this.setState(Object.assign(this.state, { data: data }));
         });
     } else {
@@ -48,9 +77,10 @@ class AsideSearch extends React.Component {
 
   render() {
     return (
-      <div>
+      <Wrap>
         <div className="inputUser">
           <p>Add user on the board</p>
+          <small>Existing user</small>
           <input
             type="text"
             ref={e => (this.input = e)}
@@ -59,16 +89,20 @@ class AsideSearch extends React.Component {
         </div>
         {this.state.data.map((i, k) => (
           <div className="option" key={k}>
-            <div className="checkText">{i.nickname}</div>
-            <ButtonTR
-              text="&#9989;"
-              onClick={() => {
-                this.addUserOnBoard(i.id, this.props.boardId);
-              }}
-            />
+            <div className="item">
+              <div className="checkText">{i.nickname}</div>
+              <ButtonTR
+                text="&#9989;"
+                onClick={() => {
+                  this.addUserOnBoard(i.id, this.props.boardId);
+                  this.input.value = "";
+                  this.setState(Object.assign(this.state, { data: [] }));
+                }}
+              />
+            </div>
           </div>
         ))}
-      </div>
+      </Wrap>
     );
   }
 }

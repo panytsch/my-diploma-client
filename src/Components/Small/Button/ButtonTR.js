@@ -12,6 +12,7 @@ const Diva = styled("div")`
     font-size: ${props => props.fontSize || "1em"};
     &:hover {
       background-color: ${props => props.hover || "rgba(80, 194, 27, 0.85)"};
+      cursor: pointer;
     }
   }
 `;

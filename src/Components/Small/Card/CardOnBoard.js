@@ -2,15 +2,20 @@ import React from "react";
 import { css } from "react-emotion";
 
 const cardStyle = css({
-  padding: "20px",
+  padding: "2em 1em",
   fontFamily: "Ubuntu",
   backgroundColor: "rgb(205, 205, 201)",
-  borderRadius: "0.7em",
+  borderRadius: "0.3em",
   "& .title": {
+    margin: "1em 0.5em",
     color: "rgb(16, 17, 20)"
   },
   "& .count": {
+    margin: "1em 0.5em",
     color: "rgb(85, 83, 85)"
+  },
+  "& h3": {
+    fontSize: "0.8em"
   }
 });
 
@@ -26,7 +31,7 @@ class Card extends React.Component {
         <h3>Card name:</h3>
         <p className="title">{title}</p>
         <br />
-        <h5>Count of lines</h5>
+        <h3>Count of lines</h3>
         <p className="count">{count}</p>
       </div>
     );

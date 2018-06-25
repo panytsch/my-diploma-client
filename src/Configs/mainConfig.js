@@ -2,6 +2,7 @@ import axios from "axios";
 
 const config = {
   host: "http://my-trello-api/",
+  // host: "http://api.trello.st.php-academy.org/",
   postLine: (token, nickname, title, boardId) => dispatch => {
     let newState = {};
     let _this = this.a;

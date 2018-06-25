@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import Header from "../Components/Big/HeaderMainPage";
+import Content from "../Components/Big/Content";
 
 class MainPage extends React.Component {
   componentWillMount() {
@@ -18,7 +19,7 @@ class MainPage extends React.Component {
     return (
       <div>
         <Header autorize={true} registration={true} logout={false} />
-        <div className="">here will be content</div>
+        <Content />
       </div>
     );
   }

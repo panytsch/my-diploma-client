@@ -5,6 +5,23 @@ import styled from "react-emotion";
 import config from "../../Configs/mainConfig";
 import ButtonTR from "../Small/Button/ButtonTR";
 
+const Wrap = styled("div")`
+  display: block;
+  ${"small"} {
+    font-size: 0.8em;
+    color: rgb(82, 88, 72);
+    display: block;
+  }
+  ,
+  ${"input"} {
+    margin: 5px;
+		padding: 0.2em 0.5em;
+		${"&:focus"} {
+	    outline: none;
+	  }
+  },
+`;
+
 class AsideAddUser extends React.Component {
   sendInvite() {
     const { token, boardId, nickname } = this.props;
@@ -25,8 +42,9 @@ class AsideAddUser extends React.Component {
   }
   render() {
     return (
-      <div>
+      <Wrap>
         <p>Invite friend to our Trello</p>
+        <small>Non register users</small>
         <div>
           <input type="email" ref={e => (this.input = e)} placeholder="email" />
         </div>
@@ -35,7 +53,7 @@ class AsideAddUser extends React.Component {
           color="#d7d7c5"
           onClick={this.sendInvite.bind(this)}
         />
-      </div>
+      </Wrap>
     );
   }
 }

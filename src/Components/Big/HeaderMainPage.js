@@ -19,7 +19,7 @@ const container = css({
   display: "flex",
   justifyContent: "space-between",
   padding: "20px",
-  backgroundColor: "rgb(166, 198, 241)",
+  backgroundColor: "rgb(207, 226, 252)",
   "& a": {
     textTransform: "none",
     textDecoration: "none"

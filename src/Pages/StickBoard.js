@@ -21,8 +21,15 @@ const defaultData = [
 
 const Contain = styled("div")`
   display: flex;
+  font-family: Ubuntu;
+  line-height: 2em;
+  ${"p.info"} {
+    color: rgb(125, 107, 96);
+    font-size: 0.8em;
+    line-height: 1.2;
+  }
   ${".aside"} {
-    background-color: rgb(196, 45, 141);
+    background-color: rgb(75, 231, 246);
     flex-grow: 1;
     flex-shrink: 0;
     ${"& .newLine"} {
@@ -38,7 +45,8 @@ class StickBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addCardVisible: true
+      addCardVisible: true,
+      aside: true
     };
     console.log("contsructor");
   }
@@ -85,7 +93,6 @@ class StickBoard extends React.Component {
             style={{ flexGrow: 3, flexShrink: 0, flexBasis: "70%" }}
             draggable
             onCardDelete={(cardId, lineId) => {
-              console.log(cardId, lineId);
               this.props.removeCardOne(
                 this.props.data.user.token,
                 nickname,
@@ -112,12 +119,7 @@ class StickBoard extends React.Component {
                 boardId={id}
               />
             }
-            handleDragStart={(cardId, laneId) => {
-              console.log("card", cardId);
-              console.log("lane", laneId);
-            }}
             handleDragEnd={(cardId, sourceLaneId, targetLaneId, position) => {
-              console.log(cardId, sourceLaneId, targetLaneId, position);
               this.props.changeCardPos(
                 this.props.data.user.token,
                 nickname,
@@ -130,8 +132,14 @@ class StickBoard extends React.Component {
             }}
             // laneSortFunction={(card1, card2) => card1.position - card2.position}
           />
+          <div className="" />
           <div className="aside">
             <div className="newLine">
+              {this.state.addCardVisible && (
+                <p className="info">
+                  For adding new Line,<br />push button bellow
+                </p>
+              )}
               {!this.state.addCardVisible && (
                 <div>
                   <input type="text" ref={e => (this.addCardInput = e)} />

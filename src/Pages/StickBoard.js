@@ -7,6 +7,7 @@ import styled from "react-emotion";
 import config from "../Configs/mainConfig";
 import Header from "../Components/Big/HeaderMainPage";
 import AsideSearch from "../Components/Big/AsideSearch";
+import AsideAddUser from "../Components/Big/AsideAddUser";
 import ButtonTR from "../Components/Small/Button/ButtonTR";
 import LaneHeader from "../Components/Small/LaneHeader/LaneHeader";
 
@@ -161,6 +162,11 @@ class StickBoard extends React.Component {
               />
             </div>
             <AsideSearch
+              token={this.props.data.user.token}
+              nickname={nickname}
+              boardId={id}
+            />
+            <AsideAddUser
               token={this.props.data.user.token}
               nickname={nickname}
               boardId={id}

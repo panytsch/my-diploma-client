@@ -41,7 +41,7 @@ class AsideSearch extends React.Component {
   }
 
   search() {
-    if (this.input.value) {
+    if (this.input.value && this.input.value.length > 2) {
       axios
         .get(`${config.host}users/getall`, {
           params: {
@@ -52,8 +52,9 @@ class AsideSearch extends React.Component {
           }
         })
         .then(({ data }) => {
-          console.log(data);
-          this.setState(Object.assign(this.state, { data: data }));
+          if (data) {
+            this.setState(Object.assign(this.state, { data: data }));
+          }
         });
     } else {
       this.setState(Object.assign(this.state, { data: [] }));

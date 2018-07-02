@@ -75,7 +75,7 @@ class HeaderMainPage extends React.Component {
                       `/dashboard/${this.props.data.user.nickname}`
                     );
                   }}
-                  text="My DashBoard"
+                  text={this.props.data.user.nickname || "My DashBoard"}
                   color="rgba(#b2b681, 0.81)"
                   hover="rgb(77, 182, 93)"
                 />

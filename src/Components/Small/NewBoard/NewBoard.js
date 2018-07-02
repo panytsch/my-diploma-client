@@ -29,8 +29,11 @@ class NewBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isInput: false
+      isInput: true
     };
+  }
+  componentDidMount() {
+    this.setVisible();
   }
   setVisible() {
     this.setState(

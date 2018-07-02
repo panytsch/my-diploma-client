@@ -103,11 +103,13 @@ class StickBoard extends React.Component {
             }}
             editable
             onCardAdd={(card, laneId) => {
+              let desc = card.description || "description";
+              let title = card.title || "title";
               this.props.addCardItem(
                 this.props.data.user.token,
                 nickname,
-                card.title,
-                card.description,
+                title,
+                desc,
                 +laneId
               );
             }}

@@ -33,6 +33,19 @@ class FormAuth extends React.Component {
               email: query.email || "",
               boardId: query.boardId || null
             }}
+            validate={_val => {
+              const errors = {};
+              if (!_val.nickname) {
+                errors.nickname = "Required field";
+              }
+              if (!_val.password) {
+                errors.password = "Required field";
+              }
+              if (!this.props.auth && !_val.email) {
+                errors.email = "Required field";
+              }
+              return errors;
+            }}
             onSubmit={_values => {
               if (this.props.auth) {
                 axios
@@ -60,37 +73,69 @@ class FormAuth extends React.Component {
             }}
             render={({ handleSubmit, form, submitting, pristine, values }) => (
               <form onSubmit={handleSubmit}>
-                <div>
-                  <label>Login</label>
-                  <Field
-                    name="nickname"
-                    component="input"
-                    type="text"
-                    placeholder="Nickname"
-                  />
-                </div>
-                <div>
-                  <label>Password</label>
-                  <Field
-                    name="password"
-                    component="input"
-                    type="password"
-                    placeholder="Password"
-                  />
-                </div>
+                <Field
+                  name="nickname"
+                  type="text"
+                  placeholder="Nickname"
+                  label="Login"
+                >
+                  {props => (
+                    <div>
+                      <label>{props.label}</label>
+                      <input
+                        {...props.input}
+                        type={props.type}
+                        placeholder={props.placeholder}
+                      />
+                      {props.meta.error &&
+                        props.meta.touched && <span>{props.meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
+                <Field
+                  name="password"
+                  component="input"
+                  type="password"
+                  placeholder="Password"
+                  label="Password"
+                >
+                  {props => (
+                    <div>
+                      <label>{props.label}</label>
+                      <input
+                        {...props.input}
+                        type={props.type}
+                        placeholder={props.placeholder}
+                      />
+                      {props.meta.error &&
+                        props.meta.touched && <span>{props.meta.error}</span>}
+                    </div>
+                  )}
+                </Field>
                 {!this.props.auth && (
-                  <div>
-                    <label>Email</label>
-                    <Field
-                      name="email"
-                      component="input"
-                      type="email"
-                      placeholder="Email"
-                    />
-                  </div>
+                  <Field
+                    name="email"
+                    component="input"
+                    type="email"
+                    placeholder="Email"
+                    label="Email"
+                  >
+                    {props => (
+                      <div>
+                        <label>{props.label}</label>
+                        <input
+                          {...props.input}
+                          type={props.type}
+                          placeholder={props.placeholder}
+                        />
+                        {props.meta.error &&
+                          props.meta.touched && <span>{props.meta.error}</span>}
+                      </div>
+                    )}
+                  </Field>
                 )}
                 <div className="buttons">
-                  <button type="submit" disabled={submitting || pristine}>
+                  <button type="submit" disabled={submitting}>
                     Submit
                   </button>
                   <button
